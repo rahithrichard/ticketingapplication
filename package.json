@@ -59,7 +59,7 @@
     "ionic-angular": "3.9.2",
     "ionic-selectable": "^3.4.0",
     "ionicons": "3.0.0",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.0",
     "ng-click-outside": "^4.0.0",
     "ng-pick-datetime": "^7.0.0",
     "ngx-country-picker": "^2.0.0",
