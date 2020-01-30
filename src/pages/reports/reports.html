@@ -1,0 +1,174 @@
+<ion-header >
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title style="text-align: left;">Stage Reports</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content style="background-color: white;height:95%;" >
+    <form  id="form" [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+    <ion-row>
+    	<ion-col>
+			<ion-item [ngClass]="{'error-border':!authForm.controls.from_datetime.valid && authForm.controls.from_datetime.touched}">
+				<ion-label >
+					<ion-icon name="calendar"></ion-icon>From Date<sup><span style="color:red">&#8859;</span></sup> 
+				</ion-label>
+				<ion-datetime  formControlName="from_datetime" display-format="dd/mm/YYYY hh:mm A" pickerFormat='DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+			</ion-item>
+            <ion-item  *ngIf="authForm.controls.from_datetime.hasError('required') && authForm.controls.from_datetime.touched">
+                <p>Field  Due on is required!</p>
+            </ion-item>  
+            <ion-item  [ngClass]="{'error-border':!authForm.controls.end_date.valid && authForm.controls.end_date.touched}">
+				<ion-label >
+					<ion-icon name="calendar"></ion-icon> To Date 
+				</ion-label>
+				<ion-datetime  formControlName="end_date" display-format="dd/mm/YYYY hh:mm A"  pickerFormat=' DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+			</ion-item>
+        </ion-col>
+        <ion-col>  
+			<ion-item>
+				<ion-label> Whose status is not the last stage</ion-label>
+				<ion-checkbox formControlName="check_open"></ion-checkbox>
+			</ion-item>
+			<ion-item>
+				<ion-label>Created during the given period</ion-label>
+				<ion-checkbox formControlName="check_created"></ion-checkbox>
+			</ion-item>
+		</ion-col>
+		<ion-col>  
+			<ion-item>
+				<ion-label>Worked during the given period</ion-label>
+				<ion-checkbox formControlName="check_worked"></ion-checkbox>
+			</ion-item>
+			<ion-item>
+				<ion-label>Closed during the given period</ion-label>
+				<ion-checkbox formControlName="check_closed"></ion-checkbox>
+			</ion-item>
+		</ion-col>
+    </ion-row>
+	    <button ion-button color="primary" style="margin-left: 2%;" [disabled]="authForm.invalid"  type="submit">Submit
+	    </button>
+    </form>
+
+  <mat-accordion>
+    <mat-expansion-panel  *ngIf="closeData" >
+    <mat-expansion-panel-header style="background-color: antiquewhite; margin-bottom: 1%;">
+      <mat-panel-title>
+    * Number Of Closed Issues: {{number_of_closed_issues}} 
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ion-row  class="rowCustom" *ngIf="closeData" id="customRow" >
+        <ion-col>Name</ion-col>
+        <!--<ion-col>User</ion-col>-->
+        <ion-col>Issue No</ion-col>
+        <ion-col>Title</ion-col>
+        <ion-col>Stage</ion-col>
+        <ion-col>Last Update </ion-col>
+        <ion-col>Updated By</ion-col>
+        <ion-col>Remarks</ion-col>
+    </ion-row>
+    <ion-row  class="rowCustom" *ngFor="let data of closeData">
+        <ion-col>{{data.q_name}}</ion-col>
+        <!--ion-col>{{data.updated_by_user}}</ion-col>-->
+        <ion-col>{{data.issue_number}}</ion-col>
+        <ion-col>{{data.title}}</ion-col>
+        <ion-col>{{data.stage}}</ion-col>
+        <ion-col>{{lastupdateToLocal(data.iss_log_update)}}</ion-col>
+        <ion-col>{{data.updated_by_user}}</ion-col>
+        <ion-col>{{data.remarks}}</ion-col>
+    </ion-row>
+  </mat-expansion-panel>
+
+    <mat-expansion-panel *ngIf="createdData">
+    <mat-expansion-panel-header style="
+     background:linear-gradient(90deg, rgb(255, 233, 233) 0%, rgb(255, 224, 224) 35%, rgb(255, 218, 213) 100%);margin-bottom: 1%;">
+      <mat-panel-title>
+      * Number of created issues: {{number_of_created_issues}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ion-row  class="rowCustom"  id="customRow" >
+        <ion-col >Name</ion-col>
+        <!--<ion-col>User</ion-col>-->
+        <ion-col>Issue No</ion-col>
+        <ion-col>Title</ion-col>
+        <ion-col>Stage</ion-col>
+        <ion-col>Last Update </ion-col>
+        <ion-col>Updated By</ion-col>
+        <ion-col>Remarks</ion-col>
+    </ion-row>
+
+    <ion-row class="rowCustom" *ngFor="let data of createdData">
+        <ion-col>{{data.q_name}}</ion-col>
+        <!--ion-col>{{data.updated_by_user}}</ion-col>-->
+        <ion-col>{{data.issue_number}}</ion-col>
+        <ion-col>{{data.title}}</ion-col>
+        <ion-col>{{data.stage}}</ion-col>
+        <ion-col>{{lastupdateToLocal(data.iss_log_update)}}</ion-col>
+        <ion-col>{{data.updated_by_user}}</ion-col>
+        <ion-col>{{data.remarks}}</ion-col>
+    </ion-row>
+  </mat-expansion-panel>
+
+    <mat-expansion-panel  *ngIf="openData">
+    <mat-expansion-panel-header 
+    style="background:linear-gradient(90deg, rgb(255, 233, 233) 0%, rgb(255, 224, 224) 35%, rgb(255, 218, 213) 100%); margin-bottom: 1%;">
+      <mat-panel-title>
+        * Number of open issues: {{number_of_open_issues}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ion-row  class="rowCustom" id="customRow" >
+        <ion-col>Name</ion-col>
+        <!--<ion-col>User</ion-col>-->
+        <ion-col>Issue No</ion-col>
+        <ion-col>Title</ion-col>
+        <ion-col>Stage</ion-col>
+        <ion-col>Last Update </ion-col>
+        <ion-col>Updated By</ion-col>
+        <ion-col>Remarks</ion-col>
+    </ion-row>
+
+    <ion-row class="rowCustom" *ngFor="let data of openData">
+        <ion-col>{{data.q_name}}</ion-col>
+        <!--ion-col>{{data.updated_by_user}}</ion-col>-->
+        <ion-col>{{data.issue_number}}</ion-col>
+        <ion-col>{{data.title}}</ion-col>
+        <ion-col>{{data.stage}}</ion-col>
+        <ion-col>{{lastupdateToLocal(data.iss_log_update)}}</ion-col>
+        <ion-col>{{data.updated_by_user}}</ion-col>
+        <ion-col>{{data.remarks}}</ion-col>
+    </ion-row>
+
+  </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="workedData">
+    <mat-expansion-panel-header style="background:linear-gradient(90deg, rgb(255, 233, 233) 0%, rgb(255, 224, 224) 35%, rgb(255, 218, 213) 100%); margin-bottom: 1%;">
+      <mat-panel-title>
+       * Number of issues worked: {{number_of_issues_worked}} 
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <ion-row  class="rowCustom"  id="customRow" >
+        <ion-col>Name</ion-col>
+        <!--<ion-col>User</ion-col>-->
+        <ion-col>Issue No</ion-col>
+        <ion-col>Title</ion-col>
+        <ion-col>Stage</ion-col>
+        <ion-col>Last Update </ion-col>
+        <ion-col>Updated By</ion-col>
+        <ion-col>Remarks</ion-col>
+    </ion-row>
+    <ion-row class="rowCustom" *ngFor="let data of workedData">
+        <ion-col>{{data.q_name}}</ion-col>
+        <!--ion-col>{{data.updated_by_user}}</ion-col>-->
+        <ion-col>{{data.issue_number}}</ion-col>
+        <ion-col>{{data.title}}</ion-col>
+        <ion-col>{{data.stage}}</ion-col>
+        <ion-col>{{lastupdateToLocal(data.iss_log_update)}}</ion-col>
+        <ion-col>{{data.updated_by_user}}</ion-col>
+        <ion-col>{{data.remarks}}</ion-col>
+    </ion-row>
+  </mat-expansion-panel>
+</mat-accordion>
+
+</ion-content>

@@ -1,0 +1,41 @@
+<ion-header >
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title style="text-align: left;">Pendency Stage</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content style="background-color: white;height:95%;" >
+  <div class="row" style="font-size:1.6rem;font-weight:500;">
+    <div class="col">Queue: {{queueName()}}</div>
+    <div class="col">Issue No: {{issueNum()}}</div>
+  </div>
+  <!--p style="font-size:1.8rem;margin-left: 15px;"><b>Queue: </b>{{queueName()}} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <b>Issue No: </b>{{issueNum()}}</p-->
+  <mat-table #table [dataSource]="dataSource"  class="mat-elevation-z8" *ngIf="pendencyData">
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Stage</mat-header-cell>
+      <mat-cell *matCellDef="let element" > {{element.status}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actual_time_taken_min">
+      <mat-header-cell *matHeaderCellDef>Actual Time Taken (Minutes) </mat-header-cell>
+      <mat-cell *matCellDef="let element" [ngStyle]="{'color':takeColor(element)}"> {{element.actual_time_taken_min}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="alloted_time_min">
+      <mat-header-cell *matHeaderCellDef style="margin-left:10px;">Alloted Time (Minutes)</mat-header-cell>
+      <mat-cell *matCellDef="let element" style="margin-left:15px;" [ngStyle]="{'color':takeColor(element)}"> {{element.alloted_time_min}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="updated_on">
+      <mat-header-cell *matHeaderCellDef>Updated On</mat-header-cell>
+      <mat-cell *matCellDef="let element" > {{updateFormat(element.updated_on)}}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>	 
+  </mat-table>
+  <mat-paginator #paginator
+  [pageSize]="10"
+  [pageSizeOptions]="[10]"
+  [showFirstLastButtons]="true" >
+  </mat-paginator>
+</ion-content>

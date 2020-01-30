@@ -1,0 +1,24 @@
+page-profile {
+	#customRow{
+		background-color: white;
+		border-bottom: 1px #e69d62 solid;
+	    background-color: #efd7c4;
+	    border-radius: 5px;
+	    color: black;
+	}
+.row {
+    padding-top: 2%;
+    padding-bottom: 1%;
+    border-radius: 5px;
+}
+.classA{
+		background-color: black;
+}
+.mat-header-row {
+	background: linear-gradient(90deg, rgb(253, 220, 216) 0%, rgb(214, 255, 239) 35%, rgb(236, 255, 211) 100%);
+	font-size: 1.4rem;
+	position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+}
+}

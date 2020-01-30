@@ -1,0 +1,25 @@
+page-home {
+.col{
+background-color:white;
+}
+
+#item{
+background-color:rgba(087,099,909,0)
+}
+.button-md {
+    background: linear-gradient(90deg, rgb(167, 194, 252) 0%, rgb(193, 148, 245) 35%, rgb(106, 157, 252) 100%);;
+    font-weight: 500;
+    font-size: 1.6rem;
+}
+.item p {
+    color: #ec7373;
+}
+
+.item-label-floating .text-input{
+    margin-left: 0;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: calc(100% - 8px);
+    color: rgb(0, 0, 0);
+}
+}

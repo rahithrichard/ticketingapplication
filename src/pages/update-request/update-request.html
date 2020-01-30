@@ -1,0 +1,259 @@
+<ion-header>
+  <ion-navbar color="blue">
+    <button [disabled]="isBrowser" ion-button menuToggle>
+      <ion-icon [hidden]="isBrowser" name="menu"></ion-icon>
+    </button>
+    <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content  style="background-color: white;height:95%;">
+<ion-item  class="customItem" item-left id="inputwrapper">
+  <ion-label color="dark"><h3 style="font-size: 1.9rem;">Issue number : {{id.issue_number}}</h3></ion-label>
+ 	<button  (click)="edit();" item-right style="background:0;color:rgb(106, 133, 253);font-weight: 500;">
+  	<ion-icon id="iconEdit" name="create"></ion-icon>
+</button>
+</ion-item>
+ 	<ion-row id="rowcss">
+ 		<ion-col col-6 >
+			<span style="font-weight: bold;">Title:</span><span style="padding-left:2%">{{id.title}}</span>
+ 		</ion-col>
+ 		<ion-col col-6>
+			<span style="font-weight: bold;">Unit Serial Number:</span><span style="padding-left:2%">{{id.xdata2.unit_sr_no}}</span>
+ 		</ion-col>
+ 	</ion-row>
+    <ion-row id="rowcss">
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Priority:</span><span style="padding-left:2%">{{priority[id.xdata2.priority]}}</span>
+ 		</ion-col>
+		<ion-col col-6>
+			<span style="font-weight: bold;">Product:</span><span style="padding-left:2%">{{id.product_name}}</span>
+		</ion-col>
+	</ion-row>
+ 	 	<ion-row id="rowcss">
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Due On:</span><span style="padding-left:2%">{{id.due_date|date:'medium'}}</span>
+ 		</ion-col>
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Type:</span><span style="padding-left:2%">{{id.tkt_type}}</span>
+ 		</ion-col>
+ 	</ion-row>
+ 	 	<ion-row id="rowcss">
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Unit Location:</span><span style="padding-left:2%">{{id.unit_location}} - {{id.pin_code}}</span>
+ 		</ion-col>
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Queue:</span><span style="padding-left:2%">{{id.q_name}}</span>
+ 		</ion-col>
+ 	</ion-row>
+ 	 <ion-row id="rowcss">
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Requestor Name:</span><span style="padding-left:2%">{{id.customer_name}}</span>
+ 		</ion-col>
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Root Cause:</span><span style="padding-left:2%">{{root_cause}}</span>
+ 		</ion-col>
+	 </ion-row>
+	  	 <ion-row id="rowcss">
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Requestor Mobile:</span><span style="padding-left:2%">{{id.contact_no}}</span>&nbsp;&nbsp;
+				<!--label *ngIf="cont" >Require SMS Alert  &nbsp;
+				<div class="pretty p-icon p-curve p-jelly p-bigger p-svg">
+						<input type="checkbox" disabled [checked]="id.require_sms_alerts" />
+						<div class="state p-warning">
+								<svg class="svg svg-icon" viewBox="0 0 20 20">
+										<path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+									</svg>
+							<label></label>
+						</div>
+					</div></label>-->
+ 		</ion-col>
+ 		<ion-col col-6>
+				<span style="font-weight: bold;">Stage:</span><span style="padding-left:2%">{{id.status_desc}}</span>
+ 		</ion-col>
+	 </ion-row>
+	 <ion-row id="rowcss">
+		<ion-col col-6>
+				<span style="font-weight: bold;"> Requestor Email:</span><span style="padding-left:2%">{{id.requestor_mail_id}}</span>&nbsp;&nbsp;
+				<!--label *ngIf="req">Require SMS Alerts &nbsp; 
+				<div  class="pretty p-icon p-curve p-jelly p-bigger p-svg">		
+					<input type="checkbox" disabled [checked]="id.require_sms_alerts"/>
+					<div class="state p-warning">
+							<svg class="svg svg-icon" viewBox="0 0 20 20">
+								<path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+							</svg>
+						<label></label>
+					</div>
+				</div></label> -->
+		</ion-col>
+		<ion-col col-6>
+				<span style="font-weight: bold;">Assignee:</span><span style="padding-left:2%">{{id.assignee_name}}</span>
+		</ion-col>
+	</ion-row>
+	<ion-row id="rowcss">
+		<ion-col col-6>
+				<span style="font-weight: bold;">Description:</span><span style="padding-left:2%">{{id.description}}</span>
+		</ion-col>
+	</ion-row>
+
+
+	<ion-item  class="customItem" item-left id="inputwrapper" style="padding-left: 0;">
+		<ion-label color="dark">
+			<h1 style="font-size: 2rem;">Documents Linked</h1>
+		</ion-label>
+		<button (click)="addFile()" item-right style="background:0;color:rgb(106, 133, 253);font-weight: 500;">
+			<ion-icon style="font-size: 130%;padding-bottom: 5%;" id="iconEdit" name="add">Add</ion-icon>
+		</button>
+	</ion-item>
+	<ion-list [hidden]="fileList.length==0">
+		<ion-label color="primary">
+			<h1 style="font-size: 2rem;">Selected Documents</h1>
+		</ion-label>
+		<ion-row class="customRow">
+			<ion-col class="customCol" col-4>
+				fileName
+			</ion-col>
+			<ion-col class="customCol" col-2>
+				Size
+			</ion-col>
+		</ion-row>
+		<ion-row class="customRow" *ngFor="let file of fileList">
+			<ion-col class="customDateCol" col-4>
+				{{file.name}}
+			</ion-col>
+			<ion-col class="customDateCol" col-2>
+				{{file.size}} bytes
+			</ion-col>
+		</ion-row>
+		<ion-item>
+		  <ion-label style="color:black">Internal Only</ion-label>
+		  <ion-select [(ngModel)]="internal">
+		    <ion-option value="true" >Yes</ion-option>
+		    <ion-option value="false" selected>No</ion-option>
+		  </ion-select>
+		</ion-item>
+		<ion-textarea class="textArea" placeholder="Add Description"  [(ngModel)]="fileDescription"></ion-textarea>
+		<button class='btn' ion-button (click)="submitFile()" item-left>Submit Documents</button>	
+		<ion-label color="light">
+			<h1 style="font-size: 2rem;">Linked Documents</h1>
+		</ion-label>	
+	</ion-list>
+	<ion-list>
+		<ion-row class="customRow">
+			<ion-col class="customCol" col-2>
+				Date
+			</ion-col>
+			<ion-col class="customCol" col-2>
+				User
+			</ion-col>
+			<ion-col class="customCol" col-3>
+				File Name
+			</ion-col>
+			<ion-col class="customCol" col-2>
+				Internal Only
+			</ion-col>
+			<ion-col class="customCol" col-3>
+				Description
+			</ion-col>
+
+		</ion-row>
+		<!--[(ngModel)]="document.internal_only" (ionChange)="updateDocInternal_only(document)"-->
+		<ion-row class="customRow" *ngFor='let document of linkedDocuments'>
+			<ion-col class="customDateCol" col-2>
+				{{updateFormat(document.up_date)}}
+			</ion-col>
+			<ion-col class="customDateCol" col-2>
+				{{document.full_name}}
+			</ion-col>
+			<ion-col class="customDateCol" col-3>
+			 <button (click)="downloadFile(document)">
+				<ion-icon style="padding-right:2%;" name="download"></ion-icon>
+			</button>	{{document.file_name}}
+			</ion-col>
+			<ion-col class="customDateCol" col-2>
+					<div   class="pretty p-icon p-jelly p-round  p-svg  p-locked" >
+							<input type="checkbox" checked />
+							<div class="state" *ngIf="!document.internal_only">
+								<i style="background: rgb(252, 116, 116);color:white;" class="icon fa fa-close"></i>
+									<label></label>
+							</div>
+							<div *ngIf="document.internal_only" class="state p-success">
+									<svg class="svg svg-icon" viewBox="0 0 20 20">
+											<path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z" style="stroke: white;fill:white;"></path>
+										</svg>
+									<label></label>
+							</div>
+						</div>
+			<!--ion-toggle style="width: 25%;height: 50%" [checked]="document.internal_only" disabled></ion-toggle-->
+			</ion-col>
+			<ion-col class="customDateCol" col-3>
+				{{document.description}}
+			</ion-col>
+		</ion-row>
+	</ion-list>
+	<ion-label item-left color="dark" style="margin-bottom:0">
+		<p style="font-size: 2rem;">Enter update</p>
+	</ion-label>
+	<ion-textarea class="textArea" placeholder="Add update" [value]="addUpadates" [(ngModel)]="addUpadates"></ion-textarea>
+		<ion-item>
+		  <ion-label style="color:black">Internal Only</ion-label>
+		  <ion-select [(ngModel)]="internal_only">
+		    <ion-option value="true" >Yes</ion-option>
+			<ion-option value="false" selected>No</ion-option>
+		  </ion-select>
+		</ion-item>
+	<ion-item>
+		<ion-label style="color:black">Predefined Update</ion-label>
+		<ion-select  [(ngModel)]="pre_update" style="width:80vh">
+		  <ion-option  *ngFor="let mu of predefined_update" [value]="mu.id" >{{mu.mupdate}}</ion-option>
+		</ion-select>
+	</ion-item>
+	<button class='btn' ion-button (click)="addUpdates()" item-left>Add update</button>	
+		<ion-item class="customItem" item-left id="inputwrapper" style="padding-left: 0;">
+			<ion-label color="dark">
+				<h1 style="font-size: 2rem;">Updates:</h1>
+			</ion-label>
+		</ion-item>
+		<ion-list>
+			<mat-table #table [dataSource]="dataSource"  class="mat-elevation-z8" style="font-size:1.30rem;" >
+			
+				<ng-container matColumnDef="up_date" >
+				  <mat-header-cell *matHeaderCellDef mat-sort-header style="margin-left: -20px">Date</mat-header-cell>
+				  <mat-cell *matCellDef="let element" style="margin-left: -20px"> {{updateFormat(element.up_date)}} </mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="updated_by" >
+				  <mat-header-cell *matHeaderCellDef style="margin-left: 5px">User  </mat-header-cell>
+				  <mat-cell *matCellDef="let element" style="margin-left: 5px"> {{element.updated_by}} </mat-cell>
+				</ng-container>
+			
+				<ng-container matColumnDef="column_name" >
+				  <mat-header-cell *matHeaderCellDef style="margin-left: 5px">Column Name </mat-header-cell>
+				  <mat-cell *matCellDef="let element" style="margin-left: 5px"> {{element.column_name}} </mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="remarks">
+				  <mat-header-cell *matHeaderCellDef style="margin-left: 5px">Update </mat-header-cell>
+				  <mat-cell *matCellDef="let element" style="margin-left: 5px"> {{element.remarks}} </mat-cell>
+				</ng-container>
+			
+				<ng-container matColumnDef="predefined_update" >
+				  <mat-header-cell *matHeaderCellDef style="margin-left: 4px"> Predefined Update </mat-header-cell>
+				  <mat-cell *matCellDef="let element" style="margin-left: 4px"> {{element.predefined_update}} </mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="internal_only">
+				  <mat-header-cell *matHeaderCellDef  style="margin-left: 1px">Internal Only </mat-header-cell>
+				  <mat-cell *matCellDef="let element" style="margin-left: 1px;">
+					<i *ngIf="!element.internal_only" style="background: rgb(252, 116, 116);font-size:1.2rem;color:white;border:3.5px solid rgb(252, 116, 116);border-radius: 50%;line-height: 10px;"class="icon fa fa-close"></i>
+					<i *ngIf="element.internal_only"  
+					style="background: #5cb85c;font-size:1.1rem;font-weight: 300; color:white;border:3px solid #53b153;border-radius: 50%;line-height: 11px;" 
+					class="fa fa-check"></i>	
+				 </mat-cell>
+				</ng-container>	
+				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				<mat-row *matRowDef="let row; columns: displayedColumns;" ></mat-row>
+			  </mat-table>
+			  <mat-paginator #paginator
+							 [pageSize]="20"
+							 [pageSizeOptions]="[20]"
+							 [showFirstLastButtons]="true" >
+			  </mat-paginator>
+			</ion-list>
+</ion-content>

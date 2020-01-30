@@ -1,0 +1,64 @@
+<ion-header >
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title style="text-align: left;">Reports</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content style="background-color:white">
+<ion-row>
+	<ion-col col-6>
+    <ion-card class="cardCss"> 
+    <ion-row >
+      <button class="btnUp" (click)="openPage(1)" style="background: linear-gradient(90deg, rgb(253, 194, 188) 0%, rgb(216, 208, 135) 35%, rgb(183, 252, 223) 100%);
+      "> 
+      <ion-col >
+     <i class="material-icons" style="font-size: 12.0rem;color:rgb(82, 99, 105);line-height: 0.7;padding-top:10px;
+      color:#69aefc;margin:0; margin-top:15px;
+      text-shadow: -1.1px 0 rgb(22, 21, 21), 0 1.1px rgb(41, 36, 61),1.1px 0 rgb(44, 21, 21), 0 -1.1px rgb(32, 1, 31);
+   ">assignment</i> </ion-col></button>
+  </ion-row> 
+  <ion-row>
+    <button class="btnDown" (click)="openPage(1)"> 
+    <ion-col style="color:rgb(76, 117, 252);font-weight:500;font-size:1.8rem;">Stage Report</ion-col></button>
+</ion-row></ion-card>
+  </ion-col>
+	<ion-col col-6>
+    <ion-card class="cardCss"> 
+    
+      <ion-row>
+        <button class="btnUp" (click)="openPage(2)"
+         style="background: linear-gradient(90deg, rgb(252, 229, 179) 0%, rgb(165, 244, 250) 35%, rgb(217, 203, 250) 100%);
+        "> 
+        <ion-col>
+       <i class="material-icons" style="font-size: 12.0rem;color:rgb(82, 99, 105);line-height: 0.7;padding-top:10px;
+        color:#609ffd;margin:0; margin-top:0;
+        text-shadow: -1.1px 0 rgb(22, 21, 21), 0 1.1px rgb(41, 36, 61),1.1px 0 rgb(44, 21, 21), 0 -1.1px rgb(32, 1, 31);">
+          assignment_late</i></ion-col></button>
+    </ion-row> 
+    <ion-row>
+      <button class="btnDown" (click)="openPage(2)"> 
+        <ion-col style="color:rgb(76, 117, 252);font-weight:500;font-size:1.8rem;">Pendency Report</ion-col>
+  </button></ion-row></ion-card>
+  </ion-col>
+  <ion-col col-6>
+    <ion-card class="cardCss"> 
+      <ion-row>
+        <button class="btnUp" (click)="openPage(3)" 
+        style="background: linear-gradient(90deg, rgb(253, 237, 142) 0%, rgb(218, 214, 186) 35%, rgb(161, 219, 195) 100%);"> 
+        <ion-col>
+          <i class="material-icons" style="font-size: 12.0rem;color:rgb(82, 99, 105);line-height: 0.7;padding-top:10px;
+        color:#609ffd;margin:0; margin-top:0;
+        text-shadow: -1.1px 0 rgb(22, 21, 21), 0 1.1px rgb(41, 36, 61),1.1px 0 rgb(44, 21, 21), 0 -1.1px rgb(32, 1, 31);
+     ">assignment_ind</i></ion-col></button>
+    </ion-row> 
+    <ion-row>
+      <button class="btnDown" (click)="openPage(3)"> 
+        <ion-col style="color:rgb(76, 117, 252);font-weight:500;font-size:1.8rem;">User Stage Report</ion-col>
+      </button></ion-row></ion-card>
+	</ion-col>
+</ion-row>
+</ion-content>

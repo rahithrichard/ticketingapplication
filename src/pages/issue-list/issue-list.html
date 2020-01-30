@@ -1,0 +1,168 @@
+<ion-header>
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title > Issue List</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content style="background-color: white;height:95%;"  overflow-scroll="true">
+   <ion-row id="searchcss" [hidden]="isBrowser">
+    <ion-col col-6>
+    <ion-item >
+        <ion-label>Search By</ion-label>
+      <ion-select (ionChange)="searchBy($event)" >
+        <ion-option  [value]="1">Title</ion-option>
+        <ion-option [value]="2">Issue Number</ion-option>
+        <ion-option *ngIf="serialLength>0" [value]="3">Serial Number</ion-option>
+        <ion-option [value]="4">Requestor</ion-option>
+      </ion-select>
+    </ion-item>
+    </ion-col>
+    <ion-col col-5 style="margin-right:10vh;margin-left:10px;" [hidden]="selectedSearch!=1">
+        <ion-searchbar placeholder="Search by title" (ionInput)="getItems($event,'1')"></ion-searchbar>
+      </ion-col>
+   <ion-col col-5 style="margin-right:10vh;margin-left:10px;" [hidden]="selectedSearch!=2">
+    <ion-searchbar placeholder="Search by Issue Number" (ionInput)="getItems($event,'2')"></ion-searchbar>
+   </ion-col>
+   <ion-col col-5 style="margin-right:10vh;margin-left:10px;"  [hidden]="selectedSearch!=3">
+      <ion-searchbar placeholder="Search by Serial Number" (ionInput)="getItems($event,'3')" ></ion-searchbar>
+  </ion-col>
+  <ion-col col-5 style="margin-right:10vh;margin-left:10px;"  [hidden]="selectedSearch!=4">
+    <ion-searchbar placeholder="Search by Requestor" (ionInput)="getItems($event,'4')" ></ion-searchbar>
+  </ion-col>
+  </ion-row>
+  <ion-row id="searchcss" [hidden]="!isBrowser">
+    <ion-col col-12>
+    <ion-item>
+        <ion-label>Search By</ion-label>
+      <ion-select (ionChange)="searchBy($event)" >
+        <ion-option  [value]="1">Title</ion-option>
+        <ion-option [value]="2">Issue Number</ion-option>
+        <ion-option *ngIf="serialLength>0" [value]="3">Serial Number</ion-option>
+        <ion-option [value]="4">Requestor</ion-option>
+      </ion-select>
+    </ion-item>
+    </ion-col>
+    <ion-col col-12  [hidden]="selectedSearch!=1">
+        <ion-searchbar placeholder="Search by title" (ionInput)="getItems($event,'1')"></ion-searchbar>
+      </ion-col>
+   <ion-col col-12  [hidden]="selectedSearch!=2">
+    <ion-searchbar placeholder="Search by Issue Number" (ionInput)="getItems($event,'2')"></ion-searchbar>
+   </ion-col>
+   <ion-col col-12   [hidden]="selectedSearch!=3">
+      <ion-searchbar placeholder="Search by Serial Number" (ionInput)="getItems($event,'3')" ></ion-searchbar>
+  </ion-col>
+  <ion-col col-12   [hidden]="selectedSearch!=4">
+    <ion-searchbar placeholder="Search by Requestor" (ionInput)="getItems($event,'4')" ></ion-searchbar>
+  </ion-col>
+	</ion-row>
+<ion-list [hidden]="!isBrowser">
+<ion-list *ngFor="let issue of itemsApp" class="listElement">
+  <ion-row>
+    <ion-col col-2 style="margin-left:10px;">
+      <ion-item   no-lines>   
+        <button  [disabled]="takeDisabled(issue)" [ngStyle]="{'color':takeColor(issue)}" (click)="takeIssue($event,issue)">
+          <ion-icon style="font-size: 220%;" name="md-exit"></ion-icon>
+        </button>
+      </ion-item>
+    </ion-col>
+    <ion-col >
+      <ion-item style="float: left;" no-lines>
+        <button class="customClass"  [ngStyle]="{'color':getcolor(issue.xdata2.priority)}" (click)="viewDetail($event,issue)"><ion-avatar>
+          {{issue.issue_number}}
+        </ion-avatar></button>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item style="float: left;" text-wrap no-lines>
+        <button style="background: 0;" (click)="viewDetail($event,issue)">
+        <h3 style="color:#3385ff;padding-bottom:1%;font-size: 1.2rem;text-align: left;">{{issue.title}} </h3>
+        <p style="font-size: 70%;text-align: left;">{{issue.requestor}}</p></button>
+      </ion-item>
+    </ion-col>
+  </ion-row> 
+  </ion-list>
+</ion-list>
+<ion-list [hidden]="isBrowser">
+<mat-table #table [dataSource]="dataSource"  class="mat-elevation-z8" matSort>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="take">
+      <mat-header-cell *matHeaderCellDef mat-sort-header style="margin-left: 5px;">Take</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+           <label title="Take">
+           <button [disabled]="takeDisabled(element)" style="float: left;    background-color: white;" 
+           [ngStyle]="{'color':takeColor(element)}" (click)="takeIssue($event,element)">
+            <ion-icon style="font-size: 250%;" name="md-exit">
+            </ion-icon>
+          </button></label>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="unit_sr_no" >
+      <mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="serialLength<=0" >Serial Number</mat-header-cell>
+      <mat-cell *matCellDef="let element" [hidden]="serialLength<=0" > {{element.xdata2.unit_sr_no}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="issue_number">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Issue Number</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.issue_number}} </mat-cell>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="q_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: start;">Queue Name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> <p style="text-align: start;">{{element.q_name}} </p></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Title</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="created_on">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Created On  <!--br>& By --></mat-header-cell>
+      <mat-cell *matCellDef="let element" > {{element.created_on|date}}<!-- <br> {{element.created_by}}--></mat-cell>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="status_desc">
+      <mat-header-cell *matHeaderCellDef mat-sort-header style="margin-left:5px;"> Stage </mat-header-cell>
+      <mat-cell *matCellDef="let element" style="margin-left:5px;"> {{element.status_desc}} </mat-cell>
+    </ng-container>
+
+        <!-- Name Column -->
+    <ng-container matColumnDef="assignee_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.assignee_name}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="requestor">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Requestor</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.requestor}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="tkt_type">
+      <mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="typeLen<=0"> Type </mat-header-cell>
+      <mat-cell *matCellDef="let element" [hidden]="typeLen<=0"> {{element.tkt_type}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="up_date">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last updated on </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{lastupdateToLocal(element.up_date)}} </mat-cell>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="priority">
+      <mat-header-cell *matHeaderCellDef mat-sort-header [hidden]="priorityLen<=0" > Priority </mat-header-cell>
+      <mat-cell *matCellDef="let element" [hidden]="priorityLen<=0"> {{element.xdata2.priority}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="viewDetail($event,row)" ></mat-row>
+  </mat-table>
+  <mat-paginator #paginator
+                 [pageSize]="20"
+                 [pageSizeOptions]="[20]"
+                 [showFirstLastButtons]="true" >
+  </mat-paginator>
+</ion-list>
+
+</ion-content>

@@ -1,0 +1,175 @@
+<!--
+  Generated template for the UseUrlPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header >
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Request Form </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding style="background-color: rgba(228, 224, 233, 0.582)">
+  <form  id="form" [formGroup]="urlForm" (submit)="onSubmit(urlForm.value)">
+    <ion-row >
+    <ion-col col-md-6 style="background-color: rgb(245, 238, 238);" >
+        <ion-item  id="item">
+            <ion-label floating >  <ion-icon name="log-in"></ion-icon>
+            Queue:<sup><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-select  class="form-control" interface="popover" formControlName="queue" (ionChange)="onChange($event)">
+                <ion-option *ngFor="let p of queue_list"  [value]="p.id">{{p.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item  id="item" *ngIf="urlForm.controls.queue.hasError('required') && urlForm.controls.queue.touched">
+            <p style="color:red">Sorry, field Queue of request is required!</p>
+        </ion-item>
+        <ion-item [hidden]="usnHide" id="item" [ngClass]="{'error-border':!urlForm.controls.unit_sr_no.valid && urlForm.controls.unit_sr_no.touched}">
+          <ion-label floating><ion-icon name="clipboard"></ion-icon> Unit Serial Number<sup *ngIf="usnMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+          <ion-input [disabled]="disable"  formControlName="unit_sr_no" type="text"></ion-input>
+        </ion-item>
+        <ion-item id="item" *ngIf="usnMandatory && urlForm.controls.unit_sr_no.touched && urlForm.value.unit_sr_no==''">
+          <p style="color:red;">Field Unit Serial Number  is required!</p>
+        </ion-item> 
+        <ion-item  id="item" [ngClass]="{'error-border':!urlForm.controls.title.valid && urlForm.controls.title.touched}">
+          <ion-label floating>
+          <ion-icon name="card"></ion-icon> Title<sup><span style="color:red">&#8859;</span></sup>
+          </ion-label>
+          <ion-input [disabled]="disable" formControlName="title" type="text" ></ion-input>
+      </ion-item>
+      <ion-item  id="item" *ngIf="urlForm.controls.title.hasError('required') && urlForm.controls.title.touched">
+          <p style="color:red">Sorry, field Title is required!</p>
+        </ion-item>      
+        <ion-item id="item" *ngIf="urlForm.controls.title.hasError('minlength') && urlForm.controls.title.touched">
+          <p style="color:red">Minimum title length is 8!</p>
+        </ion-item>
+        <ion-item *ngIf="urlForm.controls.title.hasError('maxlength') && urlForm.controls.title.touched">
+          <p style="color:red">Maximum title length is 30!</p>
+        </ion-item>
+        <ion-item  id="item" [ngClass]="{'error-border':!urlForm.controls.unit_location.valid && urlForm.controls.unit_location.touched}">
+          <ion-label floating><ion-icon name="locate"></ion-icon> Address <sup><span style="color:red">&#8859;</span></sup></ion-label>
+          <ion-input [disabled]="disable" formControlName="unit_location" type="text" ></ion-input>
+      </ion-item>
+  
+      <ion-item  id="item" *ngIf="urlForm.controls.unit_location.hasError('required') && urlForm.controls.unit_location.touched">
+          <p style="color:red;">Sorry, field Unit Location is required!</p>
+      </ion-item>      
+      <ion-item id="item" *ngIf="urlForm.controls.unit_location.hasError('minlength') && urlForm.controls.unit_location.touched">
+          <p style="color:red;">Minimum Unit Location length is 8!</p>
+      </ion-item>
+      <ion-item *ngIf="urlForm.controls.unit_location.hasError('maxlength') && urlForm.controls.unit_location.touched">
+          <p style="color:red;">Maximum Unit Location length is 250!</p>
+      </ion-item>
+      <ion-item id="item" [ngClass]="{'error-border':!urlForm.controls.pinCode.valid && urlForm.controls.pinCode.touched}">
+          <ion-label floating><ion-icon name="pin"></ion-icon> Pin Code <sup><span style="color:red">&#8859;</span></sup></ion-label>
+          <ion-input [disabled]="disable" formControlName="pinCode" type="number"></ion-input>
+      </ion-item>
+      <ion-item id="item" *ngIf="urlForm.controls.pinCode.hasError('required') && urlForm.controls.pinCode.touched">
+          <p style="color:red;">Field  Pin Code is required!</p>
+      </ion-item>
+      <ion-item  id="item" *ngIf="urlForm.controls.pinCode.hasError('minlength') && urlForm.controls.pinCode.touched">
+          <p style="color:red;">Pin Code length should be 6</p>
+      </ion-item>   
+      <ion-item *ngIf="urlForm.controls.pinCode.hasError('maxlength') && urlForm.controls.pinCode.touched">
+          <p style="color:red;">Maximum pinCode length is 6!</p>
+      </ion-item>
+        <ion-item id="item" [ngClass]="{'error-border':!urlForm.controls.contact.valid && urlForm.controls.contact.touched}">
+          <label style="font-size:1.4rem;color:rgba(0,0,0,0.4);font-weight: 450;"><ion-icon name="call"></ion-icon>Requestor Mobile<sup><span style="color:red">&#8859;</span></sup></label>
+          <input [hidden]="disable"  formControlName="contact"   maxlength="10" id="text" type="text">
+      </ion-item>
+      <ion-item id="item" *ngIf="urlForm.controls.contact.hasError('required') && urlForm.controls.contact.touched">
+          <p style="color:red"> Requestor Mobile Field  is required!</p>
+      </ion-item>
+      <ion-item *ngIf="numb(urlForm.value.contact)<'1000000000' && urlForm.controls.contact.touched">
+        <p style="color:red">Please enter valid Requestor Mobile!</p>
+    </ion-item> 
+      <ion-item  id="item" *ngIf="urlForm.controls.contact.hasError('minlength') && urlForm.controls.contact.touched">
+          <p style="color:red"> Minimum Requestor Mobile length is 10!</p>
+      </ion-item>     
+      <!--ion-item *ngIf="urlForm.controls.contact.hasError('maxlength') && urlForm.controls.contact.touched">
+          <p style="color:red">Maximum  Requestor Mobile length is 10!</p>
+      </ion-item> -->
+      <ion-item>
+        <input formControlName="file" type="file" [multiple]="multiple" #fileInput>
+    </ion-item> 
+          </ion-col>
+  <ion-col col-md-6 style="background-color: rgb(245, 238, 238);" >
+    <ion-item id="item" [ngClass]="{'error-border':!urlForm.controls.email.valid && urlForm.controls.email.touched}">
+      <ion-label floating><ion-icon name="mail"></ion-icon> Email address:<sup><span style="color:red">&#8859;</span></sup></ion-label>
+      <ion-input [disabled]="disable" formControlName="email" type="email"></ion-input>
+  </ion-item>
+  <ion-item id="item" *ngIf="urlForm.controls.email.hasError('required') && urlForm.controls.email.touched">
+    <p style="color:red">Field Email address is required!</p>
+</ion-item>
+    <ion-item id="item" >
+        <ion-label floating>Country.<sup><span style="color:red">&#8859;</span></sup></ion-label>
+        <ionic-selectable 
+        [isEnabled]="!disable"
+          item-content
+          formControlName="country"
+          [items]="Countries"
+          itemValueField="name"
+          itemTextField="name"
+          [canSearch]="true"
+          (onChange)="portChange($event)">
+        </ionic-selectable>
+      
+      </ion-item>
+      <ion-item id="item" *ngIf="urlForm.controls.country.hasError('required') && urlForm.controls.country.touched">
+        <p style="color:red">Field Country is required!</p>
+    </ion-item>
+    <ion-item  id="item" [hidden]="modelHide" [ngClass]="{'error-border':!urlForm.controls.model_no.valid && urlForm.controls.model_no.touched}">
+      <ion-label floating><ion-icon name="medal"></ion-icon>Model Number<sup *ngIf="modelMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+      <ion-input [disabled]="disable" formControlName="model_no" type="text"></ion-input>
+    </ion-item>
+    <ion-item id="item" *ngIf="modelMandatory && urlForm.controls.model_no.touched && urlForm.value.model_no==''">
+      <p style="color:red;">Field Model Number is required!</p>
+    </ion-item>
+    <ion-item [hidden]="oemHide" id="item" [ngClass]="{'error-border':!urlForm.controls.oem_id.valid && urlForm.controls.oem_id.touched}">
+      <ion-label floating><ion-icon name="shuffle"></ion-icon> OEM<sup *ngIf="oemMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+      <ion-select [disabled]="disable" class="form-control" interface="popover" formControlName="oem_id">
+          <ion-option *ngFor="let p of oem_list" [value]="p.id">{{p.name}}</ion-option>
+      </ion-select>
+  </ion-item>
+  <ion-item id="item" *ngIf="oemMandatory && urlForm.controls.oem_id.touched && urlForm.value.oem_id==''">
+    <p style="color:red;">Field OEM  is required!</p>
+  </ion-item>
+  <ion-item id="item" *ngIf="oemMandatory && urlForm.controls.oem_id.touched  && urlForm.value.oem_id=='-1'">
+    <p style="color:red;">Please enter valid OEM name</p>
+</ion-item>
+  <ion-item [hidden]="productHide" id="item" [ngClass]="{'error-border':!urlForm.controls.product_id.valid && urlForm.controls.product_id.touched}">
+    <ion-label floating><ion-icon name="logo-pinterest"></ion-icon>Product<sup *ngIf="productMandatory"><span  style="color:red">&#8859;</span></sup></ion-label>
+    <ion-select [disabled]="disable"  class="form-control" interface="popover" formControlName="product_id">
+        <ion-option *ngFor="let p of product_list" [value]="p.id">{{p.name}}</ion-option>
+    </ion-select>
+</ion-item>
+<ion-item id="item" *ngIf="productMandatory && urlForm.controls.product_id.touched && urlForm.value.product_id==''">
+  <p style="color:red;">Field Product  is required!</p>
+</ion-item>
+<ion-item id="item" *ngIf="productMandatory && urlForm.controls.product_id.touched  && urlForm.value.product_id=='-1'">
+  <p style="color:red;">Please enter valid product</p>
+</ion-item> 
+      <ion-item id="item" [ngClass]="{'error-border':!urlForm.controls.description.valid && urlForm.controls.description.touched}">
+          <ion-label floating ><ion-icon name="create"></ion-icon> Description <sup><span style="color:red">&#8859;</span></sup></ion-label>
+          <ion-textarea [disabled]="disable"  style="border-bottom:1px solid #1b776e;" formControlName="description" ></ion-textarea>
+      </ion-item>
+      <ion-item id="item" *ngIf="urlForm.controls.description.hasError('required') && urlForm.controls.description.touched">
+          <p style="color:red">Field Description is required!</p>
+      </ion-item>
+      <ion-item  id="item" *ngIf="urlForm.controls.description.hasError('minlength') && urlForm.controls.description.touched">
+          <p style="color:red">Minimum Description length is 8!</p>
+      </ion-item>
+      </ion-col>
+      <button ion-button full color="primary" [disabled]="urlForm.invalid 
+                || (usnMandatory && urlForm.value.unit_sr_no=='')
+                || (modelMandatory && urlForm.value.model_no=='')
+                || (oemMandatory && (urlForm.value.oem_id=='' || urlForm.value.oem_id=='-1'))
+                || (productMandatory && (urlForm.value.product_id=='' || urlForm.value.product_id=='-1'))" style="margin-top: 20px;height: 45px;" type="submit">Submit</button>                  
+     </ion-row>
+ </form>
+ <button (click)="backPage()" ion-button full color="primary"  style="margin-top: 20px;height: 45px;background: #f7c4c4;">Back</button>                  
+</ion-content>

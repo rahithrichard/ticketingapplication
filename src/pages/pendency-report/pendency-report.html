@@ -1,0 +1,67 @@
+<ion-header >
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title style="text-align: left;">Pendency Reports</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content style="background-color: white;height:95%;" >
+    <form  id="form" [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+    <ion-row>
+    	<ion-col>
+			<ion-item [ngClass]="{'error-border':!authForm.controls.from_datetime.valid && authForm.controls.from_datetime.touched}">
+				<ion-label >
+					<ion-icon name="calendar"></ion-icon>From Date<sup><span style="color:red">&#8859;</span></sup> 
+				</ion-label>
+				<ion-datetime  formControlName="from_datetime" display-format="dd/mm/YYYY hh:mm A" pickerFormat='DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+			<!--label>From:</label>	<angular2-date-picker (ngModel)='value' style="padding:0.2rem 0.1rem" formControlName="from_datetime" [settings]="settings"></angular2-date-picker>-->
+			</ion-item>
+            <ion-item  *ngIf="authForm.controls.from_datetime.hasError('required') && authForm.controls.from_datetime.touched">
+                <p>Field  Due on is required!</p>
+            </ion-item>  
+        </ion-col>
+        <ion-col>  
+            <ion-item [ngClass]="{'error-border':!authForm.controls.end_date.valid && authForm.controls.end_date.touched}">
+				<ion-label >
+					<ion-icon name="calendar"></ion-icon> To Date 
+				</ion-label>
+				<ion-datetime formControlName="end_date" display-format="dd/mm/YYYY hh:mm A" pickerFormat=' DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+			</ion-item>
+		</ion-col>
+		<!--ion-col>  
+                <ion-item >
+                  <ion-label floating >Assignee:</ion-label>
+                    <ion-select formControlName="user" lass="form-control"  interface="popover" >
+                        <ion-option *ngFor="let user of userList" [value]="user.id">{{user.full_name}}
+                        </ion-option>
+                    </ion-select>
+                </ion-item>
+		</ion-col-->
+    </ion-row>
+	    <button ion-button color="primary" style="margin-left: 2%;" [disabled]="authForm.invalid"  type="submit">Submit
+	    </button>
+		</form>
+		<mat-table #table [dataSource]="dataSource" *ngIf="closeData" class="mat-elevation-z8" matSort>
+			<ng-container matColumnDef="queue">
+				<mat-header-cell *matHeaderCellDef style="margin-right:5px;">Queue</mat-header-cell>
+				<mat-cell *matCellDef="let element" style="margin-right:5px;"> {{element.queue}} &nbsp;</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="issue_number">
+				<mat-header-cell *matHeaderCellDef style="margin-right:5px;">Issue No</mat-header-cell>
+				<mat-cell *matCellDef="let element" style="margin-right:5px;"> {{element.issue_number}} &nbsp;</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="issue_title">
+				<mat-header-cell *matHeaderCellDef style="margin-right:5px;">Title</mat-header-cell>
+				<mat-cell *matCellDef="let element" style="margin-right:5px;" > {{element.issue_title}} &nbsp; </mat-cell>
+			</ng-container>
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns;" (click)="stageDetail($event,row)" class="row-link"  title="Click to display stages"></mat-row>	 
+		</mat-table>
+		<mat-paginator #paginator
+		[pageSize]="10"
+		[pageSizeOptions]="[10]"
+		[showFirstLastButtons]="true" >
+		</mat-paginator>
+</ion-content>
+

@@ -1,0 +1,269 @@
+<ion-header >
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title style="text-align: left;">Create Request</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding style="background-color: white;height:95%;" >
+    <div style="float:right; color:black;font-size:1.5rem;  margin-top:-5px;font-weight:500;">
+        Issue created by: {{created_by}}<br>Created on: {{requested_on}}
+    </div><br><br>
+    <form  id="form" [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+        <ion-row>
+        <ion-col>
+            <ion-item  id="item">
+                <ion-label floating >  <ion-icon name="log-in"></ion-icon>
+                Queue:<sup><span style="color:red">&#8859;</span></sup></ion-label>
+                <ion-select  class="form-control" interface="popover" formControlName="queue" (ionChange)="onChange($event)" >
+                    <ion-option *ngFor="let p of queue_list" (ionSelect)="selectedQueue(p.id)" [value]="p.id">{{p.name}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item  id="item" *ngIf="authForm.controls.queue.hasError('required') && authForm.controls.queue.touched">
+                <p>Sorry, field Queue of request is required!</p>
+            </ion-item> 
+              <ion-item [hidden]="usnHide" id="item" [ngClass]="{'error-border':!authForm.controls.unit_sr_no.valid && authForm.controls.unit_sr_no.touched}">
+                <ion-label floating><ion-icon name="clipboard"></ion-icon> Unit Serial Number<sup *ngIf="usnMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+                <ion-input [disabled]="disable" formControlName="unit_sr_no" type="text"></ion-input>
+              </ion-item>
+              <ion-item id="item" *ngIf="usnMandatory && authForm.controls.unit_sr_no.touched  && authForm.value.unit_sr_no==''">
+                <p style="color:red;">Field  Unit Serial Number is required!</p>
+              </ion-item>                
+              <ion-item  id="item" [ngClass]="{'error-border':!authForm.controls.title.valid && authForm.controls.title.touched}">
+                <ion-label floating>
+                <ion-icon name="card"></ion-icon> Title<sup><span style="color:red">&#8859;</span></sup>
+                </ion-label>
+                <ion-input [disabled]="disable" formControlName="title" type="text" ></ion-input>
+            </ion-item>
+              <ion-item  id="item" *ngIf="authForm.controls.title.hasError('required') && authForm.controls.title.touched">
+                <p>Sorry, field Title is required!</p>
+              </ion-item>      
+              <ion-item id="item" *ngIf="authForm.controls.title.hasError('minlength') && authForm.controls.title.touched">
+                <p>Minimum title length is 8!</p>
+              </ion-item>
+              <ion-item *ngIf="authForm.controls.title.hasError('maxlength') && authForm.controls.title.touched">
+                <p>Maximum title length is 30!</p>
+              </ion-item>
+                <ion-item  id="item" [ngClass]="{'error-border':!authForm.controls.unit_location.valid && authForm.controls.unit_location.touched}">
+                    <ion-label floating><ion-icon name="locate"></ion-icon> Address <sup><span style="color:red">&#8859;</span></sup></ion-label>
+                    <ion-input [disabled]="disable" formControlName="unit_location" type="text" ></ion-input>
+                </ion-item>
+
+                <ion-item  id="item" *ngIf="authForm.controls.unit_location.hasError('required') && authForm.controls.unit_location.touched">
+                    <p>Sorry, field Unit Location is required!</p>
+                </ion-item>      
+                <ion-item id="item" *ngIf="authForm.controls.unit_location.hasError('minlength') && authForm.controls.unit_location.touched">
+                    <p>Minimum Unit Location length is 8!</p>
+                </ion-item>
+                <ion-item *ngIf="authForm.controls.unit_location.hasError('maxlength') && authForm.controls.unit_location.touched">
+                    <p>Maximum Unit Location length is 30!</p>
+                </ion-item>
+                <ion-item id="item" [ngClass]="{'error-border':!authForm.controls.pinCode.valid && authForm.controls.pinCode.touched}">
+                    <ion-label floating><ion-icon name="pin"></ion-icon> Pin Code <sup><span style="color:red">&#8859;</span></sup></ion-label>
+                    <ion-input [disabled]="disable" formControlName="pinCode" type="number"></ion-input>
+                </ion-item>
+                <ion-item id="item" *ngIf="authForm.controls.pinCode.hasError('required') && authForm.controls.pinCode.touched">
+                    <p>Field  Pin Code is required!</p>
+                </ion-item>
+                <ion-item  id="item" *ngIf="authForm.controls.pinCode.hasError('minlength') && authForm.controls.pinCode.touched">
+                    <p>Pin Code length should be 6</p>
+                </ion-item>   
+                <ion-item *ngIf="authForm.controls.pinCode.hasError('maxlength') && authForm.controls.pinCode.touched">
+                    <p>Maximum pinCode length is 6!</p>
+                </ion-item>
+                    <ion-item id="item">
+                        <ion-label floating>Country</ion-label>
+                        <ionic-selectable
+                          item-content
+                          formControlName="country"
+                          [items]="Countries"
+                          itemValueField="name"
+                          itemTextField="name"
+                          [canSearch]="true"
+                          (onChange)="portChange($event)">
+                        </ionic-selectable>      
+                </ion-item>             
+
+                      <ion-item  id="item" [ngClass]="{'error-border':!authForm.controls.customer_name.valid && authForm.controls.customer_name.touched}">
+                        <ion-label floating><ion-icon name="person"></ion-icon> Requestor Name <sup><span style="color:red">&#8859;</span></sup></ion-label>
+                        <ion-input [disabled]="disable" formControlName="customer_name" type="text" ></ion-input>
+                      </ion-item>
+                      <ion-item id="item" *ngIf="authForm.controls.customer_name.hasError('required') && authForm.controls.customer_name.touched">
+                        <p>Field Requestor Name is required!</p>
+                    </ion-item>
+
+                <ion-item id="item" [ngClass]="{'error-border':!authForm.controls.email.valid && authForm.controls.email.touched}">
+                    <ion-label floating><ion-icon name="mail"></ion-icon> Requestor Email: <!--sup><span style="color:red">&#8859;</span></sup>--></ion-label>
+                    <ion-input [disabled]="disable" formControlName="email" type="email"></ion-input>
+                </ion-item>             
+                <ion-item id="item" [ngClass]="{'error-border':!authForm.controls.contact.valid && authForm.controls.contact.touched}">
+                    <label style="font-size:1.4rem;color:rgba(0,0,0,0.4);font-weight: 450;"><ion-icon name="call"></ion-icon> Requestor Mobile <sup><span style="color:red">&#8859;</span></sup></label><br>
+                    <input [hidden]="disable"  formControlName="contact"   maxlength="12" id="text" type="text">
+                </ion-item>
+                <ion-item id="item" *ngIf="authForm.controls.contact.hasError('required') && authForm.controls.contact.touched">
+                    <p>Field Requestor Mobile is required!</p>
+                </ion-item>
+                <ion-item  id="item" *ngIf="authForm.controls.contact.hasError('minlength') && authForm.controls.contact.touched">
+                    <p> Minimum Requestor Mobile length is 10!</p>
+                </ion-item>     
+                <!--ion-item *ngIf="authForm.controls.contact.hasError('maxlength') && authForm.controls.contact.touched">
+                    <p>Maximum Requestor Mobile length is 10!</p>
+                </ion-item>-->  
+                <ion-item *ngIf="numb(authForm.value.contact)<'1000000000' && authForm.controls.contact.touched">
+                    <p>Please enter valid Requestor Mobile!</p>
+                </ion-item> 
+                <ion-item id="item" [ngClass]="{'error-border':!authForm.controls.external_ids.valid && authForm.controls.external_ids.touched}">
+                    <ion-label floating><ion-icon name="mail"></ion-icon> External Ids</ion-label>
+                    <ion-input [disabled]="disable" formControlName="external_ids" type="email"></ion-input>
+                </ion-item>               
+
+                <ion-item id="item" [ngClass]="{'error-border':!authForm.controls.due_date.valid && authForm.controls.due_date.touched}">
+                    <ion-label ><ion-icon name="calendar"></ion-icon>  Due on<sup><span style="color:red">&#8859;</span></sup> </ion-label>
+                    <ion-datetime [disabled]="disable" formControlName="due_date"  style='margin-right: 40px;' display-format="dd/mm/YYYY hh:mm A" [min]="mindate" pickerFormat='DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+                </ion-item>
+                <ion-item id="item" *ngIf="authForm.controls.due_date.hasError('required') && authForm.controls.due_date.touched">
+                    <p>Field  Due on is required!</p>
+                </ion-item>                     
+
+                <ion-item>
+                    <input formControlName="file" type="file" [multiple]="multiple" #fileInput>
+                </ion-item> 
+        </ion-col>
+    <ion-col>
+        <!--ion-item id="item" [ngClass]="{'error-border':!authForm.controls.created_by.valid && authForm.controls.created_by.touched}">
+            <ion-label floating><ion-icon name="mail"></ion-icon> Created By:</ion-label>
+            <ion-input [disabled]="disable" formControlName="created_by" type="email"></ion-input>
+        </ion-item> 
+        <ion-item id="item" [ngClass]="{'error-border':!authForm.controls.requested_on.valid && authForm.controls.requested_on.touched}">
+            <ion-label ><ion-icon name="calendar"></ion-icon>  Created on </ion-label>
+            <ion-datetime [disabled]="true" formControlName="requested_on"  display-format="dd/mm/YYYY hh:mm A" pickerFormat='DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+        </ion-item-->
+        <ion-item  id="item" [hidden]="priorityHide">
+            <ion-label floating ><ion-icon name="stats"></ion-icon> Priority<sup *ngIf="priorityMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-select [disabled]="disable" class="form-control" interface="popover" formControlName="priority">
+                <ion-option *ngFor="let p of priority" [value]="p.value">{{p.text}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item id="item" *ngIf="priorityMandatory && authForm.controls.priority.touched  && authForm.value.priority==''">
+            <p style="color:red;">Field priority is required!</p>
+        </ion-item>  
+        <ion-item  id="item" [hidden]="typeId">
+            <ion-label floating >  <ion-icon name="log-in"></ion-icon>
+            Type<sup *ngIf="typeMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-select [disabled]="disable" class="form-control" interface="popover" formControlName="type">
+                <ion-option *ngFor="let p of issue_type_list" [value]="p.id">{{p.type}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item id="item" *ngIf="typeMandatory && authForm.controls.type.touched  && authForm.value.type==''">
+            <p style="color:red;">Field Type is required!</p>
+        </ion-item> 
+        <ion-item id="item" *ngIf="typeMandatory && authForm.controls.type.touched  && authForm.value.type=='-1'">
+            <p style="color:red;">Please Enter valid type</p>
+        </ion-item>
+        <ion-item  id="item">
+            <ion-label floating ><ion-icon name="log-in"></ion-icon>
+            Root cause:</ion-label>
+            <ion-select [disabled]="disable" class="form-control" interface="popover" formControlName="root_cause" >
+                <ion-option *ngFor="let p of filteredElements" [value]="p.id">{{p.cause}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item  id="item" *ngIf="authForm.controls.root_cause.hasError('required') && authForm.controls.root_cause.touched">
+            <p>Sorry, field Root cause of request is required!</p>
+        </ion-item> 
+
+        <ion-item  id="item" [hidden]="productHide">
+            <ion-label floating >  <ion-icon name="log-in"></ion-icon>
+            Product<sup *ngIf="productMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-select [disabled]="disable" class="form-control"  interface="popover" formControlName="product">
+                <ion-option *ngFor="let p of product_list" [value]="p.id">{{p.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item id="item" *ngIf="productMandatory && authForm.controls.product.touched  && authForm.value.product==''">
+            <p style="color:red;">Field Product is required!</p>
+        </ion-item>   
+        <ion-item id="item" *ngIf="productMandatory && authForm.controls.product.touched  && authForm.value.product=='-1'">
+            <p style="color:red;">Please enter valid product</p>
+        </ion-item> 
+        <ion-item [hidden]="categoryHide" id="item">
+            <ion-label floating >  <ion-icon name="log-in"></ion-icon>
+            Category<sup *ngIf="categoryMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-select [disabled]="disable" class="form-control" interface="popover" formControlName="category">
+                <ion-option *ngFor="let p of issue_category_list" [value]="p.id">{{p.description}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item id="item" *ngIf="categoryMandatory && authForm.controls.category.touched  && authForm.value.category==''">
+            <p style="color:red;">Field Category is required!</p>
+        </ion-item> 
+        <ion-item id="item" *ngIf="categoryMandatory && authForm.controls.category.touched  && authForm.value.category=='-1'">
+            <p style="color:red;">Please enter valid Category</p>
+        </ion-item> 
+        <ion-item  id="item" [hidden]="modelHide" [ngClass]="{'error-border':!authForm.controls.model_no.valid && authForm.controls.model_no.touched}">
+            <ion-label floating><ion-icon name="medal"></ion-icon>Model Number<sup *ngIf="modelMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-input [disabled]="disable" formControlName="model_no" type="text"></ion-input>
+          </ion-item>
+          <ion-item id="item" *ngIf="modelMandatory && authForm.controls.model_no.touched  && authForm.value.model_no==''">
+            <p style="color:red;">Field Model Number is required!</p>
+        </ion-item> 
+        <ion-item  [hidden]="oemHide" id="item" [ngClass]="{'error-border':!authForm.controls.oem_id.valid && authForm.controls.oem_id.touched}">
+            <ion-label floating><ion-icon name="create"></ion-icon> OEM<sup *ngIf="oemMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-select [disabled]="disable" class="form-control" interface="popover" formControlName="oem_id">
+                <ion-option *ngFor="let p of oem_list" [value]="p.id">{{p.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item id="item" *ngIf="oemMandatory && authForm.controls.oem_id.touched  && authForm.value.oem_id==''">
+            <p style="color:red;">Field OEM is required!</p>
+        </ion-item> 
+        <ion-item id="item" *ngIf="oemMandatory && authForm.controls.oem_id.touched  && authForm.value.oem_id=='-1'">
+            <p style="color:red;">Please enter valid OEM name</p>
+        </ion-item>
+            <ion-item  id="item" >
+               <div style="color: #999999;
+    font-size: 85%;    margin-bottom: 1%;"><ion-icon name="card"></ion-icon> Stage</div>
+                <span>
+                {{selectedStatuss}}</span>
+            </ion-item>
+           
+        <ion-item  [hidden]="recurrenceHide" id="item">
+            <ion-label floating >Recurrence<sup *ngIf="recurrenceMandatory"><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-select [disabled]="disable" class="form-control" interface="popover" formControlName="recurrence">
+                <ion-option *ngFor="let p of recurrence" [value]="p.value">{{p.text}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item id="item" *ngIf="recurrenceMandatory && authForm.controls.recurrence.touched  && authForm.value.recurrence==''">
+            <p style="color:red;">Field Recurrence is required!</p>
+        </ion-item>
+
+        <ion-item  id="item">
+            <ion-label floating >Assignee:</ion-label>
+            <ion-select [disabled]="disable" class="form-control" interface="popover" formControlName="name">
+            <ion-option *ngFor="let p of user_list" [value]="p">{{p.assignee}}-{{p.group}}</ion-option>
+            </ion-select>
+        </ion-item>  
+           
+        <ion-item id="item" [ngClass]="{'error-border':!authForm.controls.description.valid && authForm.controls.description.touched}">
+            <ion-label floating ><ion-icon name="create"></ion-icon> Description <sup><span style="color:red">&#8859;</span></sup></ion-label>
+            <ion-textarea  [disabled]="disable" style="border-bottom:1px solid #1b776e;" formControlName="description" ></ion-textarea>
+        </ion-item>
+        <ion-item id="item" *ngIf="authForm.controls.description.hasError('required') && authForm.controls.description.touched">
+            <p>Field Description is required!</p>
+        </ion-item>
+        <ion-item  id="item" *ngIf="authForm.controls.description.hasError('minlength') && authForm.controls.description.touched">
+            <p>Minimum Description length is 8!</p>
+        </ion-item>                
+    </ion-col>
+</ion-row>   
+<button ion-button full color="primary" [disabled]="authForm.invalid
+                || (usnMandatory && authForm.value.unit_sr_no=='')
+                || (modelMandatory && authForm.value.model_no=='')
+                || (oemMandatory && (authForm.value.oem_id=='' || authForm.value.oem_id=='-1'))
+                || (productMandatory && (authForm.value.product=='' || authForm.value.product=='-1'))
+                || (recurrenceMandatory && authForm.value.recurrence=='')
+                || (priorityMandatory && authForm.value.priority=='')
+                || (categoryMandatory && (authForm.value.category=='' || authForm.value.category=='-1'))
+                || (typeMandatory && (authForm.value.type=='' || authForm.value.type=='-1'))"
+                style="margin-top: 20px;" type="submit">Submit</button>  
+</form>
+<!--|| (categoryMandatory && (authForm.value.category=='' || authForm.value.category=='-1'))
+|| (typeMandatory && (authForm.value.type=='' || authForm.value.type==''))-->
+</ion-content>

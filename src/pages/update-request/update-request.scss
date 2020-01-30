@@ -1,0 +1,117 @@
+@import 'node_modules/pretty-checkbox/src/pretty-checkbox.scss';
+page-update-request {
+	.customItem{
+		background: linear-gradient(90deg, rgb(253, 220, 216) 0%, rgb(214, 255, 239) 35%, rgb(236, 255, 211) 100%);
+	
+	}
+	.itemcss{
+		background-color:0;
+	}
+	#iconEdit{
+		background-color:none;
+		font-size: 190%;
+	}
+	.input-wrapper {
+		-webkit-flex: initial;
+		flex: initial;
+	}
+	.item-inner {
+		border-bottom:0px;
+	}
+	#rowcss{
+	    color: black;
+   	    padding: 5px;
+	}
+	.customRow{
+		color: black;
+		margin-bottom: 1%;
+	}
+	.h1{
+		font-size: 4rem;
+	}
+	.customCol{
+		background-color:#c6e6de;
+		font-size: 1.3rem;
+	}
+	.customDateCol{
+		background-color:rgba(255,255,0,0);
+		border-bottom:1px solid black;
+		
+	}
+	.textArea{
+		border: 1px solid #000;
+		color:#000;
+	}
+	.button-md {
+		background: linear-gradient(90deg, rgb(167, 194, 252) 0%, rgb(193, 148, 245) 35%, rgb(106, 157, 252) 100%);;
+		font-weight: 500;
+		font-size: 1.6rem;
+	}
+	.btn{
+		margin-top: 1%;
+	}
+	.toggle-md.toggle-checked .toggle-icon {
+    background-color: #efd7c4;
+
+}
+.mat-column-up_date{
+    flex: 0 0 17%;
+    overflow: hidden;
+}
+.mat-column-updated_by{
+    flex: 0 0 17%;
+    overflow: hidden;
+}
+.mat-column-column_name{
+    flex: 0 0 19%;
+    overflow: hidden;
+}
+.mat-column-remarks{
+    flex: 0 0 20%;
+    overflow: hidden;
+}
+.mat-column-predefined_update{
+    flex: 0 0 20%;
+    overflow: hidden;
+}
+.mat-column-internal_only{
+    flex: 0 0 15%;
+	overflow: hidden;
+}
+.mat-header-row {
+	background: linear-gradient(90deg, rgb(252, 162, 162) 0%, rgb(174, 227, 252) 35%, rgb(185, 250, 165) 100%);
+	position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+}
+.mat-checkbox-input {
+
+	width: 25px!important;
+	height:25px!important;
+	
+  }
+  .mat-header-cell{
+	font-size:1.4rem;
+  }
+  .mat-header-row {
+    min-height: 35px;
+}
+.mat-row {
+    min-height: 40px;
+}
+  .mat-checkbox-inner-container {
+	background: rgb(221, 48, 120);
+}
+.toggle-md .toggle-icon {
+  border-radius: 14px;
+  position: relative;
+  display: block;
+  width: 5.5vh;
+  height: 2.5vh;
+  background-color: #dedede;
+  -webkit-transition: background-color 300ms;
+  transition: background-color 300ms;
+  pointer-events: none;
+}
+
+}

@@ -1,0 +1,59 @@
+
+<ion-content padding style="background:linear-gradient(90deg, rgb(185, 175, 245) 0%, rgb(69, 114, 124) 35%, rgb(110, 170, 248) 100%);">
+  <ion-grid style="height: 100%">
+    <ion-row justify-content-center align-items-center style="height: 95%" >
+     <ion-col col-md-4>
+        <svg class="svg-shape" xmlns="http://www.w3.org/2000/svg" width="30%" height="50%" viewBox="0 0 48 48" style="opacity: 1; margin-left: 35%" preserveAspectRatio="none">
+	        <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 6c3.31 0 6 2.69 6 6 0 3.32-2.69 6-6 6s-6-2.68-6-6c0-3.31 2.69-6 6-6zm0 28.4c-5.01 0-9.41-2.56-12-6.44.05-3.97 8.01-6.16 12-6.16s11.94 2.19 12 6.16c-2.59 3.88-6.99 6.44-12 6.44z" fill="rgb(122, 146, 255)" stroke="rgb(170,170,170)" stroke-width="0" stroke-linecap="square" stroke-alignment="inner" vector-effect="non-scaling-stroke" stroke-miterlimit="100"></path>
+        </svg>
+        <div>
+         <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+        <ion-card id="item">
+        <ion-item  id="item" [ngClass]="{'error-border':!authForm.controls.username.valid && authForm.controls.username.touched}">
+            <ion-label style="color:rgb(102, 102, 255)" floating><ion-icon name="person" ></ion-icon> Username</ion-label>
+            <ion-input formControlName="username" type="email" ></ion-input>
+        </ion-item>
+  
+        <ion-item  id="item" *ngIf="authForm.controls.username.hasError('required') && authForm.controls.username.touched">
+            <p>Sorry, field username is required!</p>
+        </ion-item>      
+        <ion-item id="item" *ngIf="authForm.controls.username.hasError('minlength') && authForm.controls.username.touched">
+            <p>minimum username length is 8!</p>
+        </ion-item>
+        </ion-card>
+        <ion-card id="item">
+        <ion-item id="item" [ngClass]="{'error-border':!authForm.controls.password.valid && authForm.controls.password.touched}">
+            <ion-label style="color:rgb(102, 102, 255)" floating><ion-icon name="key"></ion-icon> Password</ion-label>
+            <ion-input (keyup.enter)="onSubmit(authForm.value)" formControlName="password" type="password"></ion-input>
+        </ion-item>
+        <ion-item id="item" *ngIf="authForm.controls.password.hasError('required') && authForm.controls.password.touched">
+            <p>field password is required!</p>
+        </ion-item>
+        <ion-item  id="item" *ngIf="authForm.controls.password.hasError('minlength') && authForm.controls.password.touched">
+            <p>minimum password length is 8!</p>
+        </ion-item>                
+        </ion-card>
+        <ion-card  id="item" [hidden]="isBrowser">
+            <ion-item  id="item" >
+                <ion-label style="color:rgb(102, 102, 255)" floating><ion-icon name="link"></ion-icon> Url(optional)</ion-label>
+                <ion-input formControlName="url" type="text" ></ion-input>
+            </ion-item>
+        </ion-card>
+        <button ion-button full color="primary" [disabled]="!authForm.valid" style="margin-top: 20px;margin-bottom:10px;" type="submit">Login</button>        
+        </form></div>
+        <ion-label style="text-align: center;color: red;margin-top: 20px;">{{errorMessage}}</ion-label>
+        
+        <div  [hidden]="!isBrowser || publicQlength<=0">
+        <p style="text-align: center;color: rgb(95, 95, 204);font-size: 1.5rem;margin-top:-10px;">(OR)</p>
+        <button  ion-button full color="primary"  style="margin-top: 20px;"(click)="afterSubmit()">Create ticket</button>               
+        </div>
+        <div [hidden]="isBrowser" style="text-align: center;">
+            <ion-icon name="call" style="font-size:2.5rem;color:rgb(11, 93, 245);"></ion-icon>&nbsp;&nbsp;
+            <a href="tel:{{contact}}" style="color:rgb(11, 93, 245);font-size:1.5rem;">
+                    {{contact}}&nbsp;&nbsp;Click To Contact us</a>
+        </div>
+        <!--ion-label style="text-align: center;color: red;">{{queueError}}</ion-label>-->
+    </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

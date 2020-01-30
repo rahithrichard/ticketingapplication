@@ -1,0 +1,27 @@
+page-queue-menu {
+	.split-pane-md.split-pane-visible > .split-pane-side {
+	    min-width: 10%;
+	    max-width: 20%;
+	    border-right: 1px solid black;
+	    border-left: 0;
+	}
+	.no-scroll .scroll-content{
+    overflow: hidden;
+  }
+  .content{
+  background-color: #000000;
+  }
+  .customButton
+  {
+  color: #fff;
+    background-color: #2d2d2d;
+    margin-left: 5%;
+  }
+.header{
+  font-size: 5rem;
+  margin-left: 5%;
+  color:white;
+  font-weight:400;
+}
+.selectedMenu { background-color: purple; color: white; }
+}

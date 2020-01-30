@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-navbar color="dark">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title></ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content>
+     <ion-row id="searchcss">
+     <ion-col col-4>
+      <ion-searchbar placeholder="Search by title" (ionInput)="getItems($event)"></ion-searchbar>
+     </ion-col>
+    </ion-row>
+    <ion-row id="searchcss">
+        <ion-col col-2 class="buttonsRow">
+          <button ion-button><ion-icon name="add-circle"></ion-icon>&nbsp;Add</button>
+          </ion-col>
+          <ion-col offset-7 col-3>
+              <ion-item style="background-color: black;">
+                <ion-label style="color:white;">Sort By</ion-label> 
+                  <ion-select>
+                    <ion-option value="firstOption">First Option</ion-option>
+                    <ion-option value="firstOption">Second Option</ion-option>
+                 </ion-select>
+                </ion-item>           
+          </ion-col>
+       </ion-row>   
+    <ion-list class="issue">
+        <ion-row id="customRow"><ion-col col-2>Queue Name</ion-col><ion-col col-1>Owner</ion-col><ion-col col-1>Groups</ion-col><ion-col col-2>Escalation Time</ion-col><ion-col col-2>Closure TIme</ion-col><ion-col col-2> Workflow Type</ion-col><ion-col col-2>Workflow Name</ion-col></ion-row>
+        <ion-row *ngFor="let queue of queueList" (click)="viewDetail(issue)">
+          <ion-col col-2>
+          {{queue.name}}
+          </ion-col>
+          <ion-col col-1>
+            {{queue.owner}}
+          </ion-col>
+          <ion-col col-1>
+            {{queue.group}}
+          </ion-col>
+          <ion-col col-2>
+            {{queue.escalation_time_interval_hours}}
+          </ion-col>
+          <ion-col col-2>
+            {{queue.closure_time_interval_hours}}		
+          </ion-col>
+          <ion-col col-2>
+            {{queue.workflow_id}}		
+          </ion-col>
+          <ion-col col-2>
+            {{queue.workflow_name}}		
+          </ion-col>
+        </ion-row>
+    </ion-list>
+  </ion-content>
+  

@@ -1,0 +1,73 @@
+page-menu {
+	.split-pane-md.split-pane-visible > .split-pane-side {
+	    min-width: 13%;
+	    max-width: 11%;
+	    border-right: 1px solid #dedede;
+	    border-left: 0;
+	}
+	.no-scroll .scroll-content{
+    overflow: hidden;
+  }
+  .toolbar-md-blue .toolbar-background-md {
+    background: linear-gradient(90deg, rgb(174, 198, 253) 0%, rgb(191, 237, 245) 35%, rgb(211, 216, 255) 100%);
+}
+  .content{
+  background-color: #000000;
+  }
+  .customButton
+  {
+  color: rgb(0, 0, 0);
+  background:linear-gradient(90deg, rgb(214, 226, 255) 0%, rgb(232, 232, 253) 35%, rgb(222, 239, 250) 100%);
+  }
+  
+  .customButton1{
+    border-radius: 25px;
+    margin-left: 15%;
+    margin-right: 7%;
+    color: #000;
+    font-size: 1.8rem;
+    font-weight: 400;
+    background-color: #8bb4fff5;
+    width:30%;
+    height:40px;
+  }
+  .customButton2{
+    border-radius: 25px;
+    color: #000;
+    font-size: 1.8rem;
+    font-weight: 400;
+    background-color: #fd9090;
+    width:30%;
+    height:40px;
+  }
+.selectedMenu { background: rgb(185, 156, 252); color: white; }
+.menu-inner {
+    left: 0;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    -webkit-transform: translate3d(-9999px, 0, 0);
+    transform: translate3d(-9999px, 0, 0);
+    position: absolute;
+    display: block;
+    width: 213px;
+    height: 100%;
+    contain: strict;
+}
+.userCss{
+  text-align:center;
+  color:black;
+}
+.option {
+  font-family: SFNSDisplay;
+  font-size: 8px;
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+  color: #29235e;
+  width: 100% !important;
+  max-width: 100% !important;
+  justify-content: center;
+  height: 20px;
+}
+
+}

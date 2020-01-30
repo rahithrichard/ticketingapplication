@@ -1,0 +1,18 @@
+page-gps-log {
+    background: white;
+    agm-map {
+        height: 300px;
+      }
+      .button-md {
+        background: linear-gradient(90deg, rgb(171, 197, 252) 0%, rgb(208, 232, 248) 35%, rgb(139, 179, 252) 100%);
+        font-weight: 500;
+        font-size: 1.6rem;
+      }
+      .mat-header-row {
+        background:linear-gradient(90deg, rgb(255, 230, 223) 0%, rgb(219, 254, 255) 35%, rgb(253, 253, 215) 100%);
+        font-size: 1.4rem;
+        position: sticky;
+        position: -webkit-sticky;
+        top: 0;
+    }
+}

@@ -1,0 +1,25 @@
+page-reportcomponent {
+.cardCss{
+	text-align: center;
+    margin-top: 3%;
+    height:230px;
+    border-radius: 10%;
+}
+.btnUp{
+    border:0;
+    color: rgba(41, 40, 46,0.9);
+    height:155px;
+    width:100%;
+}
+.btnDown{
+    border:0;
+    color: rgba(41, 40, 46,0.9);
+    width:100%;
+    height:75px;
+    background-color: #ffffff;
+}
+
+.mat-expansion-panel-body {
+	padding:0px;
+}
+}

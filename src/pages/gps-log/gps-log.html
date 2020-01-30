@@ -1,0 +1,109 @@
+<ion-header >
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Gps Log</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding  style="background-color: white" >
+  <!--ion-list>
+    <ion-item *ngFor="let log of logs">
+      {{ log }}
+    </ion-item></ion-list>-->
+    <div [hidden]="isBrowser">
+    <div class="row" ><b>All data</b></div>
+    <div class="row">
+      <div class="col" style="text-align: center;font-weight: 450;">GPS Coordinate</div>
+  
+      <div class="col" style="text-align: end;margin-right: 12%;font-weight: 450;">Time</div>
+    </div>
+    <div class="row" *ngFor="let log of dashLogs" >
+        <div class="col" style="font-size:1.2rem;max-width: 70%;">{{log.gps_coordinates}}</div>
+        <div class="col" style="font-size:1.2rem;">{{timeFormat(log.up_date)}}</div>
+    </div><br>
+    <div class="row"><b>Not sent data</b></div>
+    <div class="row" *ngFor="let log of logs">
+      <div class="col" style="font-size:1.2rem;max-width: 70%;">{{log.gps_coordinates}}</div>
+      <div class="col" style="font-size:1.2rem;">{{timeFormat(log.up_date)}}</div>
+  </div>
+  <!--button  *ngIf="logs!=null" ion-button style="margin-left: 10%;margin-top: 5%;" color="primary" (click)="sendData()">send not sent data</button>-->
+  <button  ion-button style="margin-left: 2%;margin-top: 5%;" color="primary" (click)="update()">Refresh</button>
+</div>
+<form  id="form" [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+    <ion-row>
+    	<ion-col>
+			<ion-item [ngClass]="{'error-border':!authForm.controls.from_datetime.valid && authForm.controls.from_datetime.touched}">
+				<ion-label >
+					<ion-icon name="calendar"></ion-icon>From Date<sup><span style="color:red">&#8859;</span></sup> 
+				</ion-label>
+				<ion-datetime  formControlName="from_datetime" display-format="dd/mm/YYYY hh:mm A" pickerFormat='DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+			<!--label>From:</label>	<angular2-date-picker (ngModel)='value' style="padding:0.2rem 0.1rem" formControlName="from_datetime" [settings]="settings"></angular2-date-picker>-->
+			</ion-item>
+            <ion-item  *ngIf="authForm.controls.from_datetime.hasError('required') && authForm.controls.from_datetime.touched">
+                <p style="color:red">Field  from date is required!</p>
+            </ion-item>  
+        </ion-col>
+        <ion-col>  
+            <ion-item [ngClass]="{'error-border':!authForm.controls.end_date.valid && authForm.controls.end_date.touched}">
+				<ion-label >
+					<ion-icon name="calendar"></ion-icon> To Date <sup><span style="color:red">&#8859;</span></sup> 
+				</ion-label>
+				<ion-datetime formControlName="end_date" display-format="dd/mm/YYYY hh:mm A" pickerFormat=' DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+      </ion-item>
+      <ion-item  *ngIf="authForm.controls.end_date.hasError('required') && authForm.controls.end_date.touched">
+          <p style="color:red">Field  to date is required!</p>
+      </ion-item>
+		</ion-col>
+		<ion-col>  
+                <ion-item >
+                  <ion-label floating >User<sup><span style="color:red">&#8859;</span></sup> </ion-label>
+                    <ion-select formControlName="user" lass="form-control"  interface="popover" >
+                        <ion-option *ngFor="let user of subUsers" [value]="user.id">{{user.email}}
+                        </ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item  *ngIf="authForm.controls.user.hasError('required') && authForm.controls.user.touched">
+                    <p  style="color:red">Field  user is required!</p>
+                </ion-item>
+		</ion-col>
+    </ion-row>
+	    <button ion-button color="primary" style="margin-left: 2%;" [disabled]="authForm.invalid"  type="submit">Submit
+	    </button>
+    </form>
+    <div  *ngIf="!validity"><br><br><br><br><br><br><br><br><br></div>
+<div class="row" *ngIf="validity">
+  <div class="col">
+<mat-table #table  [dataSource]="dataSource" class="mat-elevation-z8" style="margin-left:-20px">
+  <ng-container matColumnDef="full_name">
+    <mat-header-cell *matHeaderCellDef  >Name</mat-header-cell>
+    <mat-cell *matCellDef="let element"> <p style="width: 250px;">{{element.full_name}}</p></mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="up_date">
+    <mat-header-cell *matHeaderCellDef><p >Update</p></mat-header-cell>
+    <mat-cell *matCellDef="let element"><p style="margin-right: 10vh"> {{gmtToLocal(element.up_date)}}</p></mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="gps_coordinates">
+    <mat-header-cell *matHeaderCellDef><p>Coordinate</p></mat-header-cell>
+    <mat-cell *matCellDef="let element"><button (click)="gpsLocation(element.gps_coordinates)"><ion-icon name="pin" style="font-size:36px;color:rgba(115, 100, 248, 0.973)"></ion-icon></button>&nbsp;&nbsp;{{element.gps_coordinates}}</mat-cell>
+  </ng-container>
+<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor:pointer;" ></mat-row>
+</mat-table>
+</div>
+</div>
+<div class="row" *ngIf="validity">
+  <div class="col">
+    <mat-paginator #paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[10]"
+      [showFirstLastButtons]="true" >
+    </mat-paginator>
+  </div>
+</div>
+<div *ngIf="gpsShow">
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+</agm-map></div><br><br>
+</ion-content>
+

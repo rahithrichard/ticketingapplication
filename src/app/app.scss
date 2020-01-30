@@ -1,0 +1,51 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+body {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    }
+.alertCustomCss {
+
+    // alert modal page bg color. Warning this will remove the alert transparency
+    //background-color: color($colors, dark, base); 
+    color: rgb(0, 0, 0);
+    button {
+
+        width:50px;
+        height: 30px;
+        color: rgb(9, 10, 9) !important; // button text color
+        background-color:  #efd7c4 !important;
+      //background-color: color($colors, , base) !important;
+            //button bg color
+    }
+   // .button-inner
+   
+    .alert-message {
+        color: rgb(59, 104, 250); // text color for confirm alerts
+        overflow-y:hidden;
+        margin-top:-15px;
+    }
+    .alert-title{
+        color: rgb(177, 52, 30) 
+    }
+    .alert-wrapper {
+        background-color: rgb(255, 255, 255) !important;
+       //background-color: color($colors, secondary, base);// bg color of alert content
+    }
+  }

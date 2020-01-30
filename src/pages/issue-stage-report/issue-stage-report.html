@@ -1,0 +1,66 @@
+<ion-header >
+  <ion-navbar color="blue">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title style="text-align: left;">User Stage Report</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content style="background-color: white;height:95%;" >
+	<form  id="form" [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+		<ion-row>
+			<ion-col>
+				<ion-item [ngClass]="{'error-border':!authForm.controls.from_datetime.valid && authForm.controls.from_datetime.touched}">
+					<ion-label >
+						<ion-icon name="calendar"></ion-icon>From Date<sup><span style="color:red">&#8859;</span></sup> 
+					</ion-label>
+					<ion-datetime  formControlName="from_datetime" display-format="dd/mm/YYYY hh:mm A" pickerFormat='DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+				</ion-item>
+				<ion-item  *ngIf="authForm.controls.from_datetime.hasError('required') && authForm.controls.from_datetime.touched">
+					<p>Field  Due on is required!</p>
+				</ion-item>  
+			</ion-col>
+			<ion-col>  
+				<ion-item [ngClass]="{'error-border':!authForm.controls.end_date.valid && authForm.controls.end_date.touched}">
+					<ion-label >
+						<ion-icon name="calendar"></ion-icon> To Date 
+					</ion-label>
+					<ion-datetime formControlName="end_date" display-format="dd/mm/YYYY hh:mm A" pickerFormat=' DD MMM YYYY hh:mm A' placeholder=""></ion-datetime>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<button ion-button color="primary" style="margin-left: 2%;" [disabled]="authForm.invalid"  type="submit">Submit</button>
+	</form>
+	<mat-table #table [dataSource]="dataSource"  class="mat-elevation-z8">
+		<ng-container matColumnDef="users" >
+			<mat-header-cell *matHeaderCellDef style="font-size:2.0rem;font-weight:500;color:blue;">User Name</mat-header-cell>
+			<mat-cell *matCellDef="let element; let i = index;" > <b style="font-size:1.8rem;">{{userName(element)}}</b>
+				<ion-row *ngFor="let data of issueList[dataSource.filteredData.indexOf(element)]">
+					<ion-col col-1></ion-col>
+					<ion-col><b style="font-size:1.6rem;font-weight:500;background: rgb(232, 214, 248);">Issue number : {{data.issueNum}}</b>
+							<ion-row style="font-size:1.4rem;font-weight:500;background: rgb(248, 239, 250);">
+									<ion-col>Stages</ion-col>	
+									<ion-col>Alloted Time (Minutes)</ion-col>	
+									<ion-col>Actual Time Taken (Minutes)</ion-col>	
+										
+							</ion-row>
+							<ion-row *ngFor="let stage of data.isuList" >
+									<ion-col >{{stage.status}}</ion-col>	
+									<ion-col >{{stage.alloted_time_min}}</ion-col>
+									<ion-col >{{stage.actual_time_taken_min | number:'1.2-5'}}</ion-col>			
+							</ion-row>
+							<ion-row>
+									<ion-col style="font-size:1.6rem;font-weight:500;color:rgb(107, 66, 66);">Total stages : {{data.stageLength}}</ion-col>		
+							</ion-row>
+					</ion-col>	
+				</ion-row>
+			</mat-cell>
+		</ng-container>
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>	 
+	</mat-table>
+	<mat-paginator #paginator
+	  [pageSize]="1"
+	  [showFirstLastButtons]="true">
+	</mat-paginator>
+</ion-content>

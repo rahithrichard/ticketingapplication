@@ -1,0 +1,93 @@
+<ion-split-pane when="(min-width: 1000px)">
+   <!--  our side menu  -->
+<ion-menu [content]="content">
+  <ion-content  class="no-scroll" style="background:linear-gradient(90deg, rgb(214, 226, 255) 0%, rgb(232, 232, 253) 35%, rgb(222, 239, 250) 100%)">
+        <img style="border-radius: 50%;width:60%;height:13%; display: block;margin-top:1px;margin-bottom: 1px;
+        margin-left: auto;
+        margin-right: auto;
+        " src="assets/icon/logo.png"/>
+    <ion-list no-lines>
+      <button class="customButton" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)"
+      [ngClass]="{'selectedMenu' : (p.title == selectedmenu)}">  <ion-icon style="font-size: 150%;color:  rgb(62, 56, 80);
+width: 14%;text-align: center;" name={{p.icon}} large></ion-icon>
+       <span style="  font-size: 90%;padding: 3%;">
+        {{p.title}}</span>
+      </button>
+      <button class="customButton" *ngIf="!isBrowser" ion-item (click)="exitApp()"><ion-icon name="close-circle" style="font-size: 150%;color: rgb(62, 56, 80);width: 14%;text-align: center;"></ion-icon>
+      <span style="    font-size: 100%;
+        padding: 5%;"> Exit</span></button>
+      <button class="customButton" ion-item (click)="openModal()"  value="f"><ion-icon name="key" style="color: rgb(62, 56, 80);font-size: 150%;width: 14%;text-align: center;"></ion-icon>
+        <span style="font-size: 90%;padding: 2%;">
+        Change <div style="margin-left:12%;">Password</div></span></button>
+    <div [hidden]="isBrowser" style="width: 100%;color:rgb(11, 93, 245);text-align:center;margin-top:-5px;">
+        <ion-icon name="call" style="font-size:2.5rem;">.</ion-icon>
+        <a href="tel:{{contact}}" style="color:rgb(11, 93, 245);font-size:1.2rem;">
+        {{contact}}&nbsp;&nbsp;Click To Contact us</a>
+    </div>
+    </ion-list>
+    <pre style="margin-top: 20px;margin-left: 10px;color: rgb(87, 135, 224);white-space: pre-wrap;">build version  1.1.9 79</pre>
+  </ion-content>
+   </ion-menu>
+  <!-- the main content -->
+  <ion-header style="margin-left: 18%;">
+
+      <div style="text-align: right;margin-right: 18.5%;margin-top: 0.9%;margin-bottom: -0.4%;font-size:1.5rem;font-weight:400;right: 0;">{{userEmail}}</div>
+      <br>
+      <button  style="float: right;
+      background:none;
+      margin-right: 18%;font-size:1.6rem;margin-top:-6px;" (click)="logout()" >Logout &nbsp;<ion-icon name="power" style="font-weight: 600;"></ion-icon></button>
+  </ion-header>
+
+<ion-nav [root]="rootPage" main #content></ion-nav>
+<!--div [hidden]="isBrowser" style="position: absolute;
+bottom: 5px;
+width: 100%;
+color:rgb(11, 93, 245);
+text-align:center;"> <ion-icon name="call" style="font-size:2.5rem;">.</ion-icon>
+ <a href="tel:{{contact}}" style="color:rgb(11, 93, 245);font-size:1.5rem;">
+        {{contact}}&nbsp;&nbsp;Click To Contact us</a>
+</div-->
+</ion-split-pane>
+<div [ngStyle]="{'display':display}" style="position: absolute;width: 100%;height: 100%;background: rgba(0,0,0,0.5);">
+<div style="width: 72%;margin-left: 25%;padding: 1%;background-color: rgba(199, 200, 252, 0.87);">
+    <form [formGroup]="authForm">
+        <ion-row>
+            <ion-col>
+                <ion-list>
+                    <ion-item  id="item" [ngClass]="{'error-border':!authForm.controls.cur_password.valid && authForm.controls.new_password.touched}">
+                        <ion-label  floating style="font-size:1.4rem;font-weight: 500;color:black;"><ion-icon name="person"></ion-icon> Current Password</ion-label>
+                        <ion-input formControlName="cur_password" type="password" ></ion-input>
+                    </ion-item>
+                    <ion-item  id="item"  *ngIf="authForm.controls.cur_password.hasError('required') && authForm.controls.cur_password.touched">
+                    <p  style="font-size:0.9rem;color: red;">Current Password is required!</p>
+                    </ion-item>
+                    <ion-item  id="item" [ngClass]="{'error-border':!authForm.controls.new_password.valid && authForm.controls.new_password.touched}">
+                        <ion-label floating style="font-size:1.4rem;font-weight: 500;color:black;"><ion-icon name="person"></ion-icon> New Password</ion-label>
+                        <ion-input formControlName="new_password" type="password" ></ion-input>
+                    </ion-item>
+                    <ion-item  id="item" style="font-size:1.0rem" *ngIf="authForm.controls.new_password.hasError('required') && authForm.controls.new_password.touched">
+                        <p style="font-size:0.9rem;color: red;">Password is required!</p>
+                    </ion-item>
+                    <ion-item id="item"   *ngIf="authForm.controls.new_password.hasError('pattern') && authForm.controls.new_password.touched">
+                        <p  style="font-size:1.0rem;color: red;">Password (Letters, Number/SpecialChar and min 8 Chars)</p>
+                    </ion-item>
+                    <ion-item id="item"   [ngClass]="{'error-border':!authForm.controls.con_password.valid && authForm.controls.con_password.touched}">
+                        <ion-label floating style="font-size:1.4rem;font-weight: 600;color:black;"><ion-icon name="key"></ion-icon> Confirm new password</ion-label>
+                        <ion-input formControlName="con_password" type="password"></ion-input>
+                    </ion-item>
+                    <ion-item id="item" *ngIf="authForm.controls.con_password.hasError('required') && authForm.controls.con_password.touched">
+                        <p  style="font-size:1.0rem;color: red;">field password is required!</p>
+                    </ion-item>
+                    <ion-item  id="item"  *ngIf="authForm.controls.con_password.hasError('equalto') && authForm.controls.con_password.touched">
+                        <p  style="font-size:1.0rem;color: red;"> Passwords did not match</p>
+                    </ion-item>
+                    <ion-item id="item" >
+                        <button class="customButton1" [disabled]="!authForm.valid" (click)="onSubmitPassword(authForm.value)" style="margin-top: 20px;">Submit</button>
+                        <button class="customButton2" style="margin-top: 20px;"(click)="close()">Cancel</button>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </form>
+</div>
+</div>

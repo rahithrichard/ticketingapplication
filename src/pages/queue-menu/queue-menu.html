@@ -1,0 +1,21 @@
+<ion-split-pane when="(min-width: 1000px)">
+
+    <!--  our side menu  -->
+ <ion-menu [content]="content">
+   <ion-content  class="no-scroll" style="background-color: #2d2d2d;">
+     <ion-title style="    margin-top: 5%;">
+      <h1 class="header" >Yukthi</h1>  
+     </ion-title>
+     <ion-list>
+       <button no-lines class="customButton" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" 
+       [ngClass]="{'selectedMenu' : (p.title == selectedmenu)}">  <ion-icon style="font-size: 200%;color: white;background-color: #1b776e;width: 14%;text-align: center;padding:2%;" name={{p.icon}} large></ion-icon>
+        <span style="    font-size: 100%;
+     padding: 5%;">
+         {{p.title}}</span>
+       </button>
+     </ion-list>
+   </ion-content>
+    </ion-menu>
+   <!-- the main content -->
+   <ion-nav [root]="rootPage" main #content></ion-nav>
+ </ion-split-pane>

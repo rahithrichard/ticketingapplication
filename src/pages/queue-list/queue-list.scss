@@ -1,0 +1,48 @@
+page-queue-list {
+	
+	.row{
+		background-color: white;
+	}
+	 .ion-spinner{
+	  width: 28px;
+	  height: 28px;
+	  stroke: #444;
+	  fill: #222;
+	}
+	.issue{
+			text-align: center;
+			margin-right: 1%;
+			margin-left: 1%;
+	}
+	.searchbar{
+	    background: inherit;
+	    padding:0px;
+	    margin-bottom: 5%;
+	}
+	.row{
+        padding-top: 2%;
+        padding-bottom: 1%;
+        border-bottom: 3px black solid;
+        border-radius: 5px;
+
+    }
+    .label{
+        margin:0px;
+    }
+    #customRow{
+        background-color: white;
+        border-bottom: 3px black solid;
+        background-color: #1b766d;
+		border-radius: 5px;
+	}
+	#searchcss{
+	background-color: black;
+    border: 0px;
+	}
+	.ion-spinner{
+  width: 28px;
+  height: 28px;
+  stroke: #444;
+  fill: #222;
+}
+}
